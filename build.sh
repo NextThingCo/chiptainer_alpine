@@ -2,8 +2,8 @@
 
 SURGE_CONTAINER_IMAGE=ntc-registry.githost.io/kaplan2539/baumeister
 
-CONTAINER_IMAGE="${CI_PROJECT_PATH}"
-CONTAINER_IMAGE="${CONTAINER_IMAGE##*/}"
+CONTAINER_NAME="${CI_PROJECT_PATH}"
+CONTAINER_NAME="${CONTAINER_NAME##*/}"
 
 CONTAINER_IMAGE=${CONTAINER_IMAGE:-nextthingco/chiptainer_alpine}
 CONTAINER_NAME=${CONTAINER_NAME:-alpine_armhf}
@@ -17,6 +17,8 @@ mkdir -p "$OUTPUT_DIR"
 wget -c $ROOTFS_URL -O rootfs.tar.gz
 wget -c $QEMU_STATIC_URL
 docker build -t "${CONTAINER_IMAGE}" .
+docker push ${CONTAINER_IMAGE}
+
 docker create --name=${CONTAINER_NAME} $CONTAINER_IMAGE /bin/sh
 docker export ${CONTAINER_NAME} |gzip -9 >"${OUTPUT_DIR}/${CONTAINER_NAME}_rootfs.tar.gz"
 docker rm ${CONTAINER_NAME}

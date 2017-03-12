@@ -16,4 +16,3 @@ build:
   stage: build
   script:
     - ./build.sh
-    - docker push $CONTAINER_IMAGE
