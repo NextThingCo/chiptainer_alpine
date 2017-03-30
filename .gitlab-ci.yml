@@ -14,5 +14,6 @@ before_script:
 
 build:
   stage: build
+  tags: [qemu-arm]
   script:
     - ./build.sh
