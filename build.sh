@@ -23,4 +23,4 @@ docker create --name=${CONTAINER_NAME} $CONTAINER_IMAGE /bin/sh
 docker export ${CONTAINER_NAME} |gzip -9 >"${OUTPUT_DIR}/${CONTAINER_NAME}_rootfs.tar.gz"
 docker rm ${CONTAINER_NAME}
 
-docker run --rm -e SURGE_LOGIN=$SURGE_LOGIN -e SURGE_TOKEN=$SURGE_TOKEN -v ${OUTPUT_DIR}:/build -w /build $SURGE_CONTAINER_IMAGE /usr/bin/surge --project /build --domain chiptainer_alpine.surge.sh
+#docker run --rm -e SURGE_LOGIN=$SURGE_LOGIN -e SURGE_TOKEN=$SURGE_TOKEN -v ${OUTPUT_DIR}:/build -w /build $SURGE_CONTAINER_IMAGE /usr/bin/surge --project /build --domain chiptainer_alpine.surge.sh

@@ -8,12 +8,29 @@ stages:
 
 variables:
   CONTAINER_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH
-
-before_script:
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  CI_TOOLS_CONTAINER: ${CI_REGISTRY}/nextthingco/ci-tools:unstable
 
 build:
-  stage: build
-  tags: [qemu-arm]
-  script:
-    - ./build.sh
+    before_script:
+      - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+
+    stage: build
+    tags: [qemu-arm]
+    script:
+      - ./build.sh
+      - docker run
+        -e GHVAR_AWS_ID=${GHVAR_AWS_ID}
+        -e GHVAR_AWS_PW=${GHVAR_AWS_PW}
+        -e GHVAR_AWS_REGION=${GHVAR_AWS_REGION}
+        -e CI_PROJECT_NAME=${CI_PROJECT_NAME}
+        -e CI_BUILD_REF_NAME=${CI_BUILD_REF_SLUG}
+        -e CI_BUILD_ID=${CI_PIPELINE_ID}
+        --rm -v $PWD/out:/upload -w /upload
+        $CI_TOOLS_CONTAINER ci-s3-upload
+        *
+
+      - docker run
+        -e GHVAR_AWS_ID=${GHVAR_AWS_ID}
+        -e GHVAR_AWS_PW=${GHVAR_AWS_PW}
+        -e GHVAR_AWS_REGION=${GHVAR_AWS_REGION}
+        --rm $CI_TOOLS_CONTAINER ci-s3-cleanup s3://opensource.nextthing.co/githost/${CI_PROJECT_NAME}/${CI_BUILD_REF_SLUG}
