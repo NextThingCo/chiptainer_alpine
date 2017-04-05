@@ -18,6 +18,7 @@ build:
     tags: [qemu-arm]
     script:
       - ./build.sh
+      - ls out
       - docker run
         -e GHVAR_AWS_ID=${GHVAR_AWS_ID}
         -e GHVAR_AWS_PW=${GHVAR_AWS_PW}
