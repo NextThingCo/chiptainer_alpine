@@ -28,7 +28,7 @@ build:
         -e CI_BUILD_ID=${CI_PIPELINE_ID}
         --rm -v $PWD/out:/upload -w /upload
         $CI_TOOLS_CONTAINER ci-s3-upload
-        alpine_armhf_rootfs.tar.gz
+        chiptainer_alpine_rootfs.tar.gz
 
       - docker run
         -e GHVAR_AWS_ID=${GHVAR_AWS_ID}
