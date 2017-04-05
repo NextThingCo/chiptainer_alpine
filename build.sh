@@ -1,9 +1,9 @@
 #!/bin/sh
 
+CONTAINER_IMAGE=${CONTAINER_IMAGE:-nextthingco/chiptainer_alpine}
+
 CONTAINER_NAME="${CI_PROJECT_PATH}"
 CONTAINER_NAME="${CONTAINER_NAME##*/}"
-
-CONTAINER_IMAGE=${CONTAINER_IMAGE:-nextthingco/chiptainer_alpine}
 CONTAINER_NAME=${CONTAINER_NAME:-alpine_armhf}
 
 ROOTFS_URL=${ROOTFS_URL:-https://nl.alpinelinux.org/alpine/v3.5/releases/armhf/alpine-minirootfs-3.5.0-armhf.tar.gz}
