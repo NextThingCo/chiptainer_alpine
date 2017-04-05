@@ -17,6 +17,10 @@ wget -c $QEMU_STATIC_URL
 docker build -t "${CONTAINER_IMAGE}" .
 docker push ${CONTAINER_IMAGE}
 
+if [[ "${CI_BUILD_REF_SLUG}" == "stable" ]]; then
+    docker tag ${CONTAINER_IMAGE} ${CONTAINER%%:*}:latest
+fi
+
 docker create --name=${CONTAINER_NAME} $CONTAINER_IMAGE /bin/sh
 docker export ${CONTAINER_NAME} |gzip -9 >"${OUTPUT_DIR}/${CONTAINER_NAME}_rootfs.tar.gz"
 docker rm ${CONTAINER_NAME}
