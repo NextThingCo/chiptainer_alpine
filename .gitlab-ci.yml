@@ -7,7 +7,7 @@ stages:
   - build
 
 variables:
-  CONTAINER_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH
+  CONTAINER_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH:${CI_BUILD_REF_SLUG}
   CI_TOOLS_CONTAINER: ${CI_REGISTRY}/nextthingco/ci-tools:unstable
 
 build:
