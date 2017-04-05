@@ -19,6 +19,7 @@ docker push ${CONTAINER_IMAGE}
 
 if [[ "${CI_BUILD_REF_SLUG}" == "stable" ]]; then
     docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE%%:*}:latest
+    docker push ${CONTAINER_IMAGE%%:*}:latest
 fi
 
 docker create --name=${CONTAINER_NAME} $CONTAINER_IMAGE /bin/sh
